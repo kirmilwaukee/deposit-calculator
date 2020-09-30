@@ -1,0 +1,73 @@
+.input__workspace {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    background-color: black;
+    height: 25vh;
+}
+
+.input__card {
+    width: 30vw;
+    /* background-color: lightblue; */
+    border-radius: 5px;
+    margin-left: 35px;
+    margin-top: 40px;
+    height: 15vh;
+}
+
+.proccessing__space {
+    background-color: black;
+
+}
+
+.proccessing__space > button {
+    background-color: white;
+    color: rgb(121, 121, 121);
+    text-transform: inherit;
+    font-weight: 400;    
+    height: 50px;
+    display: flex;
+    position: relative;
+    margin-left: 105px;    
+}
+
+.proccessing__space > button:hover {
+    background-color: rgba(143, 143, 143, 0.425);
+    color: lightgray;
+  }
+
+.output__workspace {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    background-color: black;
+    height: 50vh;
+}
+
+.output__card {
+    width: 30vw;
+    background-color: black;
+    border-radius: 5px;
+    margin-left: 35px;
+    margin-top: 50px;
+    height: 15vh;
+}
+
+.output__number {
+    position: relative;
+    top: 20px;
+    left: 67px;
+    width: 20vw;
+    background-color: white;
+    border-radius: 5px;
+}
+ 
+.output__button {
+    left: 8.2vw;
+    top: 30px;
+}
+
+
+
+
+

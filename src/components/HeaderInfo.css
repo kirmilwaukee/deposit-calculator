@@ -1,0 +1,15 @@
+.header__info {
+    width: 100%;
+    height: 20vh;
+    background-color: black;
+    margin-top: 0;
+    display: flex;
+}
+
+.header__title {
+    display: flex;
+    position: relative;
+    margin: auto;
+    color: blanchedalmond;
+    font-weight: 100;
+}

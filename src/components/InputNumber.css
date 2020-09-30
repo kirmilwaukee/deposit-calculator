@@ -1,0 +1,18 @@
+.input__card {
+    width: 30vw;
+    /* background-color: lightblue; */
+    border-radius: 5px;
+    margin-left: 35px;
+    margin-top: 40px;
+    height: 15vh;
+}
+
+.input__number {
+    position: relative;
+    left: 110px;
+    top: 30px;
+    width: 15vw;
+    background-color: white;
+    border-radius: 5px;
+
+}
