@@ -1,4 +1,4 @@
-import React, {useState}  from 'react'
+import React, { useState , useEffect, useRef }  from 'react'
 import './ClientWorkspace.css'
 import Button from '@material-ui/core/Button';
 import data from '../data/depcalc.json';
@@ -19,6 +19,10 @@ function ClientWorkspace() {
     const [rate, setRate] = useState(0)
     const [income, setIncome] = useState(0)
     const [isReadyToPrint, setIsReadyToPrint] = useState(false)
+    const typeRender = useRef(false)
+    const sumRender = useRef(false)
+    const dateRender = useRef(false)
+    const [buttonClick, setButtonClick] = useState(false)
     
     const getTypeOfDeposit = (event) => {
         setName(event.target.value);
@@ -46,34 +50,50 @@ function ClientWorkspace() {
 
     const isAllEmpty = isEmptyType(name) && isEmptySum(sum) && isEmptyDate(date)
 
-    const calculateRate = () => {
-        let result = 0;
-        if (isAllEmpty) {
+    useEffect(() => {
+        if (typeRender.current) {
             if (isEmptyType(name)) {
                 setTypeError('error')
             } else {
                 setTypeError('')
             }
+        } else {
+            typeRender.current = true;
+        }   
+    }, [name, buttonClick])
+
+    useEffect(() => {
+        if (sumRender.current) {
             if (isEmptySum(sum)) {
                 setSumError('error')
             } else {
                 setSumError('')
             }
+        } else {
+            sumRender.current = true;
+        }   
+    }, [sum, buttonClick])
+
+    useEffect(() => {
+        if (dateRender.current) {
             if (isEmptyDate(date)) {
                 setDateError('error')
             } else {
                 setDateError('')
             }
         } else {
-            if (!isEmptyType(name)) {
-                setTypeError('')
-            } 
-            if (!isEmptySum(sum)) {
-                setSumError('')
-            } 
-            if (!isEmptyDate(date)) {
-                setDateError('')
-            }
+            dateRender.current = true;
+        }   
+    }, [date, buttonClick])
+
+    const isClicked = () => {
+        setButtonClick(true)
+    }
+
+    const calculateRate = () => {
+        let result = 0;
+        isClicked();
+        if (!isAllEmpty) {
             if (parseInt(date) >= data.deposits.find(currentName => currentName.name === name).param[0].period_from) {
                 for (let i = 0; i < data.deposits.find(currentName => currentName.name === name).param.length; i++) {
                     if (parseInt(date) >= data.deposits.find(currentName => currentName.name === name).param[i].period_from &&
@@ -111,16 +131,16 @@ function ClientWorkspace() {
     return (
         <div className = 'client__workspace'>
             <div className = 'input__workspace'>
-                <InputName depositDataProp = {data} nameProp={name} getType={getTypeOfDeposit} errorProp={typeError}/>          
-                <InputNumber labelProp = {'Сумма вклада:'} valueProp={sum} getValue={getSumFromInput} errorProp={sumError}/>
-                <InputNumber labelProp = {'Срок вклада:'} valueProp={date} getValue={getDateFromInput} errorProp={dateError}/>
+                <InputName ref = {typeRender} depositDataProp = {data} nameProp={name} getType={getTypeOfDeposit} errorProp={typeError}/>          
+                <InputNumber ref = {sumRender} labelProp = {'Сумма вклада:'} valueProp={sum} getValue={getSumFromInput} errorProp={sumError}/>
+                <InputNumber ref = {dateRender} labelProp = {'Срок вклада:'} valueProp={date} getValue={getDateFromInput} errorProp={dateError}/>
             </div>
             <div className = 'proccessing__space'>
                 <Button variant = 'outlined'
                 onClick={calculateRate}>
                     Рассчитать процентную ставку
                 </Button>
-            </div>            
+            </div>           
             <div className = 'output__workspace'>
                 <OutputName id = 'printfirst' labelProp = {'Процентная ставка:'} calculateProp = {rate}/>
                 <OutputName id = 'printsecond' labelProp = {'Доход в рублях:'} calculateProp = {income}/>
